@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package messenger;
+
+option go_package = "github.com/Sant1s/messenger";
+
+message Message {
+  string sender = 1;
+  string text = 2;
+}
+
+message SendMessageRequest {
+  string recipient = 1;
+  Message message = 2;
+}
+
+message ReceiveMessageRequest {
+  string recipient = 1;
+}
+
+message MessageNotification {
+  Message message = 1;
+}
+
+service Messenger {
+  rpc SendMessage(SendMessageRequest) returns (MessageNotification);
+  rpc ReceiveMessage(ReceiveMessageRequest) returns (stream MessageNotification);
+}
