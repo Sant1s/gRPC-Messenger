@@ -3,12 +3,13 @@ package main
 import (
 	"bufio"
 	"context"
-	client "github.com/Sant1s/gRPC-1C-KIS/client"
-	pb "github.com/Sant1s/gRPC-1C-KIS/pkg/github.com/Sant1s/messenger"
-	"google.golang.org/grpc"
 	"log"
 	"os"
 	"sync"
+
+	client "github.com/Sant1s/gRPC-1C-KIS/pkg/client"
+	pb "github.com/Sant1s/gRPC-1C-KIS/pkg/github.com/Sant1s/messenger"
+	"google.golang.org/grpc"
 )
 
 func main() {
@@ -33,7 +34,7 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	ctx, cancel := context.WithCancel(context.Background())
-	go client.ReceiveMessages(ctx, cli, recipient)
+	go client.ReceiveMessages(ctx, cli, sender)
 
 	for {
 		log.Println("Enter message (or 'exit' to quit):")

@@ -1,11 +1,12 @@
 package main
 
 import (
-	pb "github.com/Sant1s/gRPC-1C-KIS/pkg/github.com/Sant1s/messenger"
-	"github.com/Sant1s/gRPC-1C-KIS/server"
-	"google.golang.org/grpc"
 	"log"
 	"net"
+
+	pb "github.com/Sant1s/gRPC-1C-KIS/pkg/github.com/Sant1s/messenger"
+	"github.com/Sant1s/gRPC-1C-KIS/pkg/server"
+	"google.golang.org/grpc"
 )
 
 func main() {
@@ -14,9 +15,7 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	srv := grpc.NewServer()
-	pb.RegisterMessengerServer(srv, &server.Messenger{
-		Messages: make(map[string][]*pb.Message),
-	})
+	pb.RegisterMessengerServer(srv, server.NewMessenger())
 	log.Println("Server listening on port 50051")
 	if err := srv.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
